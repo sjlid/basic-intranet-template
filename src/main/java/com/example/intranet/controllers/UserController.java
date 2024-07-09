@@ -15,13 +15,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    @Operation(summary = "Доступен только авторизованным пользователям")
+    @Operation(summary = "Access only for authorized users")
     public String example() {
         return "Hello, world!";
     }
 
     @GetMapping("/admin")
-    @Operation(summary = "Доступен только авторизованным пользователям с ролью ADMIN")
+    @Operation(summary = "Access only for authorized users with ADMIN role")
     @PreAuthorize("hasRole('ADMIN')")
     public String exampleAdmin() {
         return "Hello, admin!";
