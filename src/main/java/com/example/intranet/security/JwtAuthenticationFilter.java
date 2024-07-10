@@ -1,6 +1,5 @@
 package com.example.intranet.security;
 
-import com.example.intranet.services.JwtService;
 import com.example.intranet.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

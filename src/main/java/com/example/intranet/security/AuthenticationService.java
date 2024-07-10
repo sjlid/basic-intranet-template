@@ -1,10 +1,11 @@
-package com.example.intranet.services;
+package com.example.intranet.security;
 
 import com.example.intranet.dtos.JwtAuthenticationResponse;
 import com.example.intranet.dtos.SignInRequest;
 import com.example.intranet.dtos.SignUpRequest;
 import com.example.intranet.models.Role;
 import com.example.intranet.models.User;
+import com.example.intranet.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

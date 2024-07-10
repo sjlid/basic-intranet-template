@@ -1,4 +1,4 @@
-package com.example.intranet.services;
+package com.example.intranet.security;
 
 import com.example.intranet.models.User;
 import io.jsonwebtoken.Claims;

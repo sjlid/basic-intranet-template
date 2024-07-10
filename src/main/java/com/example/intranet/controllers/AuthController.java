@@ -3,7 +3,7 @@ package com.example.intranet.controllers;
 import com.example.intranet.dtos.JwtAuthenticationResponse;
 import com.example.intranet.dtos.SignInRequest;
 import com.example.intranet.dtos.SignUpRequest;
-import com.example.intranet.services.AuthenticationService;
+import com.example.intranet.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
