@@ -24,20 +24,20 @@ public class User implements UserDetails {
     private Long id;
 
     @NotEmpty(message = "Login must be filled")
-    @Column(name = "username", unique = true)
-    private String username;
+    @Column(name = "login", unique = true)
+    private String login;
 
     @NotEmpty(message = "Password must be filled")
     @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "Employee name must be filled")
-    @Column(name = "employee_name")
-    private String employeeName;
+    @NotEmpty(message = "User's name must be filled")
+    @Column(name = "user_name")
+    private String userName;
 
-    @NotEmpty(message = "Employee name must be filled")
-    @Column(name = "employee_surname")
-    private String employeeSurname;
+    @NotEmpty(message = "User's surname must be filled")
+    @Column(name = "user_surname")
+    private String userSurname;
 
     @NotEmpty(message = "Phone number must be filled")
     @Column(name = "phone", unique = true)
@@ -47,18 +47,31 @@ public class User implements UserDetails {
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotEmpty(message = "Department name must be filled")
+    @NotEmpty(message = "Job's title must be filled")
+    @Column(name = "job_title")
+    private String jobTitle;
+
+    @NotEmpty(message = "Department's name must be filled")
     @Column(name = "department")
     private String departmentName;
 
+    @NotEmpty(message = "User should have image's url")
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Enumerated(EnumType.STRING)
-    @NotEmpty(message = "Employee name must be filled")
+    @NotEmpty(message = "User's role must be filled")
     @Column(name = "role")
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
     }
 
     @Override

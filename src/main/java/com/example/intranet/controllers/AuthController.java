@@ -1,10 +1,12 @@
 package com.example.intranet.controllers;
 
-import com.example.intranet.dtos.JwtAuthenticationResponse;
-import com.example.intranet.dtos.SignInRequest;
-import com.example.intranet.dtos.SignUpRequest;
+import com.example.intranet.dtos.JwtAuthenticationResponseDto;
+import com.example.intranet.dtos.SignInRequestDto;
+import com.example.intranet.dtos.SignUpRequestDto;
 import com.example.intranet.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,15 +20,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthenticationService authenticationService;
 
-    @Operation(summary = "User's registration")
+    @Operation(summary = "User's registration", description = "Here you can create a new user",
+            tags = {"user"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User has created"),
+            @ApiResponse(responseCode = "400", description = "Not all the necessary fields are filled"),
+            @ApiResponse(responseCode = "500", description = "Not all the necessary fields are present in DTO or has correct values")
+    })
     @PostMapping("/sign-up")
-    public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
+    public JwtAuthenticationResponseDto signUp(@RequestBody @Valid SignUpRequestDto request) {
         return authenticationService.signUp(request);
     }
 
-    @Operation(summary = "АUser's authentication")
+    @Operation(summary = "Login for user", description = "Here you can logging in as a user",
+            tags = {"user"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User is logged in"),
+            @ApiResponse(responseCode = "400", description = "Not all the necessary fields are filled"),
+            @ApiResponse(responseCode = "500", description = "Not all the necessary fields are present in DTO or has correct values")
+    })
     @PostMapping("/sign-in")
-    public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
+    public JwtAuthenticationResponseDto signIn(@RequestBody @Valid SignInRequestDto request) {
         return authenticationService.signIn(request);
     }
 }

@@ -1,8 +1,8 @@
 package com.example.intranet.security;
 
-import com.example.intranet.dtos.JwtAuthenticationResponse;
-import com.example.intranet.dtos.SignInRequest;
-import com.example.intranet.dtos.SignUpRequest;
+import com.example.intranet.dtos.JwtAuthenticationResponseDto;
+import com.example.intranet.dtos.SignInRequestDto;
+import com.example.intranet.dtos.SignUpRequestDto;
 import com.example.intranet.models.Role;
 import com.example.intranet.models.User;
 import com.example.intranet.services.UserService;
@@ -20,9 +20,9 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationResponse signUp(SignUpRequest request) {
+    public JwtAuthenticationResponseDto signUp(SignUpRequestDto request) {
         var user = User.builder()
-                .username(request.getUsername())
+                .login(request.getLogin())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
@@ -30,20 +30,20 @@ public class AuthenticationService {
 
         userService.create(user);
         var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponseDto(jwt);
     }
 
-    public JwtAuthenticationResponse signIn(SignInRequest request) {
+    public JwtAuthenticationResponseDto signIn(SignInRequestDto request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getUsername(),
+                request.getLogin(),
                 request.getPassword()
         ));
 
         var user = userService
                 .userDetailsService()
-                .loadUserByUsername(request.getUsername());
+                .loadUserByUsername(request.getLogin());
 
         var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponseDto(jwt);
     }
 }
