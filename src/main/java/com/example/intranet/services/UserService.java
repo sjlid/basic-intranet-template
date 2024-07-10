@@ -34,21 +34,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true)
-    public User getByUsername(String username) {
-        return userRepository.findByLogin(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
-    public UserDetailsService userDetailsService() {
-        return this::getByUsername;
-    }
-
-    public User getCurrentUser() {
-        var username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByUsername(username);
-    }
-
     @Transactional
     public void changeName(long id, String employeeName) {
         User updatedUser = findUserById(id);
@@ -61,5 +46,34 @@ public class UserService {
         User updatedUser = findUserById(id);
         updatedUser.setUserSurname(employeeSurname);
         userRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void changePhone(long id, String phone) {
+        User updatedUser = findUserById(id);
+        updatedUser.setPhone(phone);
+        userRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void changeEmail(long id, String email) {
+        User updatedUser = findUserById(id);
+        updatedUser.setEmail(email);
+        userRepository.save(updatedUser);
+    }
+
+    @Transactional(readOnly = true)
+    public User getByLogin(String login) {
+        return userRepository.findByLogin(login)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    public UserDetailsService userDetailsService() {
+        return this::getByLogin;
+    }
+
+    public User getCurrentUser() {
+        var login = SecurityContextHolder.getContext().getAuthentication().getName();
+        return getByLogin(login);
     }
 }

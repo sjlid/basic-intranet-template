@@ -1,6 +1,8 @@
 package com.example.intranet.controllers;
 
+import com.example.intranet.dtos.UserEmailDto;
 import com.example.intranet.dtos.UserNameDto;
+import com.example.intranet.dtos.UserPhoneDto;
 import com.example.intranet.dtos.UserSurnameDto;
 import com.example.intranet.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,22 +49,28 @@ public class UserController {
     public ResponseEntity<HttpStatus> changeSurname(@PathVariable long id,
                                                     @RequestBody @Valid UserSurnameDto userSurnameDto
     ) {
-        userService.changeName(id, userSurnameDto.getUserSurname());
+        userService.changeSurname(id, userSurnameDto.getUserSurname());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Operation(summary = "Change employee's phone number. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/phone")
     @PreAuthorize("hasRole('ADMIN')")
-    public String changePhoneNumber() {
-        return "Hello, admin!";
+    public ResponseEntity<HttpStatus> changePhone(@PathVariable long id,
+                                                  @RequestBody @Valid UserPhoneDto userPhoneDto
+    ) {
+        userService.changePhone(id, userPhoneDto.getPhone());
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Operation(summary = "Change employee's email. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/email")
     @PreAuthorize("hasRole('ADMIN')")
-    public String changeEmail() {
-        return "Hello, admin!";
+    public ResponseEntity<HttpStatus> changeEmail(@PathVariable long id,
+                                                  @RequestBody @Valid UserEmailDto userEmailDto
+    ) {
+        userService.changeEmail(id, userEmailDto.getEmail());
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Operation(summary = "Change employee's department. Access only for authorized users with ADMIN role")
