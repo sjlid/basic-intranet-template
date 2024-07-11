@@ -62,6 +62,20 @@ public class UserService {
         userRepository.save(updatedUser);
     }
 
+    @Transactional
+    public void changeDepartment(long id, String department) {
+        User updatedUser = findUserById(id);
+        updatedUser.setDepartment(department);
+        userRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void changeJobTitle(long id, String jobTitle) {
+        User updatedUser = findUserById(id);
+        updatedUser.setJobTitle(jobTitle);
+        userRepository.save(updatedUser);
+    }
+
     @Transactional(readOnly = true)
     public User getByLogin(String login) {
         return userRepository.findByLogin(login)
@@ -70,10 +84,5 @@ public class UserService {
 
     public UserDetailsService userDetailsService() {
         return this::getByLogin;
-    }
-
-    public User getCurrentUser() {
-        var login = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByLogin(login);
     }
 }

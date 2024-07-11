@@ -1,9 +1,6 @@
 package com.example.intranet.controllers;
 
-import com.example.intranet.dtos.UserEmailDto;
-import com.example.intranet.dtos.UserNameDto;
-import com.example.intranet.dtos.UserPhoneDto;
-import com.example.intranet.dtos.UserSurnameDto;
+import com.example.intranet.dtos.*;
 import com.example.intranet.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -76,17 +73,22 @@ public class UserController {
     @Operation(summary = "Change employee's department. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/department")
     @PreAuthorize("hasRole('ADMIN')")
-    public String changeDepartment() {
-        return "Hello, admin!";
+    public ResponseEntity<HttpStatus> changeDepartment(@PathVariable long id,
+                                                       @RequestBody @Valid UserDepartmentDto userDepartmentDto
+    ) {
+        userService.changeDepartment(id, userDepartmentDto.getDepartment());
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Operation(summary = "Change employee's job title. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/job_title")
     @PreAuthorize("hasRole('ADMIN')")
-    public String changeJobTitle() {
-        return "Hello, admin!";
+    public ResponseEntity<HttpStatus> changeJobTitle(@PathVariable long id,
+                                                     @RequestBody @Valid UserJobTitleDto userJobTitleDto
+    ) {
+        userService.changeJobTitle(id, userJobTitleDto.getJobTitle());
+        return ResponseEntity.ok(HttpStatus.OK);
     }
-
 
     @Operation(summary = "Remove an employee from the intranet. Access only for authorized users with ADMIN role")
     @DeleteMapping("/employees/{id}")

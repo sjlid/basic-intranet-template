@@ -51,9 +51,9 @@ public class User implements UserDetails {
     @Column(name = "job_title")
     private String jobTitle;
 
-    @NotEmpty(message = "Department's name must be filled")
+    @NotEmpty(message = "Department must be filled")
     @Column(name = "department")
-    private String departmentName;
+    private String department;
 
     @NotEmpty(message = "User should have image's url")
     @Column(name = "image_url")
