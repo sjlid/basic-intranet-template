@@ -22,14 +22,6 @@ public class UserController {
         return "Hello, world!";
     }
 
-
-    @Operation(summary = "Add a new employee to the intranet. Access only for authorized users with ADMIN role")
-    @PostMapping("/employees")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String createEmployee() {
-        return "Hello, admin!";
-    }
-
     @Operation(summary = "Change employee's name. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/name")
     @PreAuthorize("hasRole('ADMIN')")

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthenticationService authenticationService;
 
-    @Operation(summary = "User's registration", description = "Here you can create a new user",
-            tags = {"user"})
+    @Operation(summary = "Add a new employee to the intranet. Access only for authorized users with ADMIN role")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User has created"),
             @ApiResponse(responseCode = "400", description = "Not all the necessary fields are filled"),
             @ApiResponse(responseCode = "500", description = "Not all the necessary fields are present in DTO or has correct values")
     })
     @PostMapping("/sign-up")
+    @PreAuthorize("hasRole('ADMIN')")
     public JwtAuthenticationResponseDto signUp(@RequestBody @Valid SignUpRequestDto request) {
         return authenticationService.signUp(request);
     }
