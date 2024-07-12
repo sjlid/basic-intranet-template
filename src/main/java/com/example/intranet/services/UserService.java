@@ -23,7 +23,7 @@ public class UserService {
     }
 
     @Transactional
-    public void save(User user) {
+    public void saveUser(User user) {
         if (userRepository.existsByLogin(user.getUsername())) {
             throw new RuntimeException("User with the same username is already exists");
         }
@@ -73,6 +73,12 @@ public class UserService {
         User updatedUser = findUserById(id);
         updatedUser.setJobTitle(jobTitle);
         userRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void deleteUser(long id) {
+        User userToDelete = findUserById(id);
+        userRepository.delete(userToDelete);
     }
 
     @Transactional(readOnly = true)

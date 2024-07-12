@@ -92,8 +92,9 @@ public class UserController {
     @Operation(summary = "Remove an employee from the intranet. Access only for authorized users with ADMIN role")
     @DeleteMapping("/employees/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public String removeEmployee() {
-        return "Hello, admin!";
+    public ResponseEntity<HttpStatus> removeEmployee(@PathVariable long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Operation(summary = "Add a user's picture. Access only for authorized users with ADMIN role")
@@ -104,7 +105,7 @@ public class UserController {
             User user = userService.findUserById(id);
             String filename = userImageService.saveUserImage(file);
             user.setImageName(filename);
-            userService.save(user);
+            userService.saveUser(user);
             return ResponseEntity.ok("Avatar uploaded successfully");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");

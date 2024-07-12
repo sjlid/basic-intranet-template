@@ -22,9 +22,4 @@ public class UserImageService {
         Files.write(path, file.getBytes());
         return filename;
     }
-
-    public byte[] getUserImage(String filename) throws IOException {
-        Path path = Paths.get(storagePath, filename);
-        return Files.readAllBytes(path);
-    }
 }
