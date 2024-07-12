@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findById(long id);
 
-    Optional<List<User>> findByDepartmentNameLikeAllIgnoreCase(String departmentName);
+    Optional<List<User>> findByDepartmentLikeAllIgnoreCase(String departmentName);
 
     boolean existsByLogin(String login);
 

@@ -99,8 +99,8 @@ public class UserController {
 
     @Operation(summary = "Add a user's picture. Access only for authorized users with ADMIN role")
     @PostMapping("/employees/{id}/userpic")
-    public ResponseEntity<String> uploadAvatar(@PathVariable Long id,
-                                               @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadUserPic(@PathVariable long id,
+                                                @RequestParam("file") MultipartFile file) {
         try {
             User user = userService.findUserById(id);
             String filename = userImageService.saveUserImage(file);
