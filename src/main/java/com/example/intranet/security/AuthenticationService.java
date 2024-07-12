@@ -28,7 +28,7 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
 
-        userService.create(user);
+        userService.save(user);
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponseDto(jwt);
     }

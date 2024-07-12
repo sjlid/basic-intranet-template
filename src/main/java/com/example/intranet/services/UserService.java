@@ -4,7 +4,6 @@ import com.example.intranet.models.User;
 import com.example.intranet.repositories.UserRepository;
 import com.example.intranet.utils.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class UserService {
     }
 
     @Transactional
-    public void create(User user) {
+    public void save(User user) {
         if (userRepository.existsByLogin(user.getUsername())) {
             throw new RuntimeException("User with the same username is already exists");
         }

@@ -1,6 +1,8 @@
 package com.example.intranet.controllers;
 
 import com.example.intranet.dtos.*;
+import com.example.intranet.models.User;
+import com.example.intranet.services.UserImageService;
 import com.example.intranet.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -9,12 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
+    private final UserImageService userImageService;
 
     @Operation(summary = "Access only for authorized users")
     @GetMapping("/employees")
@@ -87,5 +94,20 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public String removeEmployee() {
         return "Hello, admin!";
+    }
+
+    @Operation(summary = "Add a user's picture. Access only for authorized users with ADMIN role")
+    @PostMapping("/employees/{id}/userpic")
+    public ResponseEntity<String> uploadAvatar(@PathVariable Long id,
+                                               @RequestParam("file") MultipartFile file) {
+        try {
+            User user = userService.findUserById(id);
+            String filename = userImageService.saveAvatar(file);
+            user.setImageName(filename);
+            userService.save(user);
+            return ResponseEntity.ok("Avatar uploaded successfully");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");
+        }
     }
 }
