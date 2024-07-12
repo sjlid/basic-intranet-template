@@ -15,7 +15,7 @@ public class UserImageService {
     @Value("${images.storage.path}")
     private String storagePath;
 
-    public String saveAvatar(MultipartFile file) throws IOException {
+    public String saveUserImage(MultipartFile file) throws IOException {
         String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         Path path = Paths.get(storagePath, filename);
         Files.createDirectories(path.getParent());
@@ -23,7 +23,7 @@ public class UserImageService {
         return filename;
     }
 
-    public byte[] getAvatar(String filename) throws IOException {
+    public byte[] getUserImage(String filename) throws IOException {
         Path path = Paths.get(storagePath, filename);
         return Files.readAllBytes(path);
     }

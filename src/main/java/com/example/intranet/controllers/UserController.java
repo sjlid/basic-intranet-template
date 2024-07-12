@@ -102,7 +102,7 @@ public class UserController {
                                                @RequestParam("file") MultipartFile file) {
         try {
             User user = userService.findUserById(id);
-            String filename = userImageService.saveAvatar(file);
+            String filename = userImageService.saveUserImage(file);
             user.setImageName(filename);
             userService.save(user);
             return ResponseEntity.ok("Avatar uploaded successfully");
