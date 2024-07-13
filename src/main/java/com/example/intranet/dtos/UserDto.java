@@ -41,7 +41,7 @@ public class UserDto {
 
     @Schema(description = "Department's name, where user is working")
     @NotEmpty(message = "Department's name must be filled")
-    private String departmentName;
+    private String department;
 
     @Schema(description = "URL for user's image")
     @NotEmpty(message = "User should have image's url")

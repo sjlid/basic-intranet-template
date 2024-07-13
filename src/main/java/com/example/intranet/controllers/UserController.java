@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api")
@@ -23,10 +24,12 @@ public class UserController {
     private final UserService userService;
     private final UserImageService userImageService;
 
-    @Operation(summary = "Access only for authorized users")
+    @Operation(summary = "Get a list of all the users. Access only for authorized users")
     @GetMapping("/employees")
-    public String getAllEmployees() {
-        return "Hello, world!";
+    public Stream<UserDto> getAllEmployees() {
+        return userService.getAllUsers()
+                .stream()
+                .map(this::convertToUserDto);
     }
 
     @Operation(summary = "Change employee's name. Access only for authorized users with ADMIN role")
@@ -110,5 +113,17 @@ public class UserController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");
         }
+    }
+
+    private UserDto convertToUserDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setUserName(user.getUsername());
+        userDto.setUserSurname(user.getUserSurname());
+        userDto.setPhone(user.getPhone());
+        userDto.setEmail(user.getEmail());
+        userDto.setJobTitle(user.getJobTitle());
+        userDto.setDepartment(user.getDepartment());
+        userDto.setImageUrl(user.getImageName());
+        return userDto;
     }
 }

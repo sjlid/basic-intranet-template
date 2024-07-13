@@ -4,11 +4,13 @@ import com.example.intranet.models.User;
 import com.example.intranet.repositories.UserRepository;
 import com.example.intranet.utils.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,12 @@ public class UserService {
     public User findUserById(long id) {
         Optional<User> foundUser = userRepository.findById(id);
         return foundUser.orElseThrow(UserNotFoundException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> getAllUsers() {
+        Sort sort = Sort.by("userSurname");
+        return userRepository.findAll(sort.ascending());
     }
 
     @Transactional
