@@ -1,10 +1,12 @@
 package com.example.intranet.services;
 
+import com.example.intranet.models.Role;
 import com.example.intranet.models.User;
 import com.example.intranet.repositories.UserRepository;
 import com.example.intranet.utils.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -97,5 +99,18 @@ public class UserService {
 
     public UserDetailsService userDetailsService() {
         return this::getByLogin;
+    }
+
+    public User getCurrentUser() {
+        // Получение имени пользователя из контекста Spring Security
+        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return getByLogin(username);
+    }
+
+    @Deprecated
+    public void getAdmin() {
+        var user = getCurrentUser();
+        user.setRole(Role.ADMIN);
+        saveUser(user);
     }
 }

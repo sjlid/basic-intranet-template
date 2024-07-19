@@ -115,6 +115,12 @@ public class UserController {
         }
     }
 
+    @GetMapping("/get-admin")
+    @Operation(summary = "Получить роль ADMIN (для демонстрации)")
+    public void getAdmin() {
+        userService.getAdmin();
+    }
+
     private UserDto convertToUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setUserName(user.getUsername());
