@@ -7,6 +7,7 @@ import com.example.intranet.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -112,6 +113,19 @@ public class UserController {
             return ResponseEntity.ok("Avatar uploaded successfully");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");
+        }
+    }
+
+    @GetMapping("/employees/{id}/avatar")
+    public ResponseEntity<byte[]> getUserImage(@PathVariable long id) {
+        try {
+            User user = userService.findUserById(id);
+            byte[] avatar = userImageService.getUserImage(user.getImageName());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_TYPE, "image/jpeg");
+            return new ResponseEntity<>(avatar, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
