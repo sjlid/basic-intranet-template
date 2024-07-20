@@ -30,7 +30,7 @@ public class AuthenticationService {
                 .phone(request.getPhone())
                 .jobTitle(request.getJobTitle())
                 .department(request.getDepartment())
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build();
 
         userService.saveUser(user);
