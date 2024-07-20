@@ -103,6 +103,7 @@ public class UserController {
 
     @Operation(summary = "Add a user's picture. Access only for authorized users with ADMIN role")
     @PostMapping("/employees/{id}/userpic")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> uploadUserPic(@PathVariable("id") long id,
                                                 @RequestParam("file") MultipartFile file) {
         try {

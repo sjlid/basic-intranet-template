@@ -110,6 +110,6 @@ public class UserService {
     public void getAdmin() {
         var user = getCurrentUser();
         user.setRole(Role.ADMIN);
-        saveUser(user);
+        userRepository.save(user);
     }
 }
