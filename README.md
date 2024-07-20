@@ -3,8 +3,9 @@
 ## Overview
 MVP version is ready. Following goals: 
 - enrich with exceptions' handling
-- fix small bugs.
+- add the rest of swagger annotations
+- fix small bugs
 
-Server-side part of basic intranet with the most popular CRUD functions for it and with added secuity with JWT using.
+Basic intranet REST service with the most popular CRUD functions for it and with added secuity with JWT.
 
 
