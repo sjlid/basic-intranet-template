@@ -91,6 +91,11 @@ public class UserService {
         userRepository.delete(userToDelete);
     }
 
+    @Transactional
+    public void changeImage(User user) {
+        userRepository.save(user);
+    }
+
     @Transactional(readOnly = true)
     public User getByLogin(String login) {
         return userRepository.findByLogin(login)

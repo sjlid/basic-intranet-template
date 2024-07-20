@@ -102,7 +102,7 @@ public class UserController {
     }
 
     @Operation(summary = "Add a user's picture. Access only for authorized users with ADMIN role")
-    @PostMapping("/employees/{id}/userpic")
+    @PutMapping("/employees/{id}/userpic")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> uploadUserPic(@PathVariable("id") long id,
                                                 @RequestParam("file") MultipartFile file) {
@@ -110,7 +110,7 @@ public class UserController {
             User user = userService.findUserById(id);
             String filename = userImageService.saveUserImage(file);
             user.setImageName(filename);
-            userService.saveUser(user);
+            userService.changeImage(user);
             return ResponseEntity.ok("Avatar uploaded successfully");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");

@@ -28,7 +28,6 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Not all the necessary fields are present in DTO or has correct values")
     })
     @PostMapping("/sign-up")
-    //@PreAuthorize("hasRole('ADMIN')") //Admin right needs only at start, then open the annotation
     public JwtAuthenticationResponseDto signUp(@RequestBody @Valid SignUpRequestDto request) {
         return authenticationService.signUp(request);
     }
