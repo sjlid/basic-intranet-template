@@ -6,6 +6,5 @@ MVP version is ready. Following goals:
 - add the rest of swagger annotations
 - fix small bugs
 
-Basic intranet REST service with the most popular CRUD functions for it and with added secuity with JWT.
-
+Basic intranet service with the most popular CRUD functions for it. Also, security with JWT is added.
 
