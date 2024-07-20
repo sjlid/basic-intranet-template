@@ -36,7 +36,7 @@ public class UserController {
     @Operation(summary = "Change employee's name. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/name")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> changeName(@PathVariable long id,
+    public ResponseEntity<HttpStatus> changeName(@PathVariable("id") long id,
                                                  @RequestBody @Valid UserNameDto userNameDto
     ) {
         userService.changeName(id, userNameDto.getUserName());
@@ -46,7 +46,7 @@ public class UserController {
     @Operation(summary = "Change employee's surname. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/surname")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> changeSurname(@PathVariable long id,
+    public ResponseEntity<HttpStatus> changeSurname(@PathVariable("id") long id,
                                                     @RequestBody @Valid UserSurnameDto userSurnameDto
     ) {
         userService.changeSurname(id, userSurnameDto.getUserSurname());
@@ -56,7 +56,7 @@ public class UserController {
     @Operation(summary = "Change employee's phone number. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/phone")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> changePhone(@PathVariable long id,
+    public ResponseEntity<HttpStatus> changePhone(@PathVariable("id") long id,
                                                   @RequestBody @Valid UserPhoneDto userPhoneDto
     ) {
         userService.changePhone(id, userPhoneDto.getPhone());
@@ -66,7 +66,7 @@ public class UserController {
     @Operation(summary = "Change employee's email. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/email")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> changeEmail(@PathVariable long id,
+    public ResponseEntity<HttpStatus> changeEmail(@PathVariable("id") long id,
                                                   @RequestBody @Valid UserEmailDto userEmailDto
     ) {
         userService.changeEmail(id, userEmailDto.getEmail());
@@ -76,7 +76,7 @@ public class UserController {
     @Operation(summary = "Change employee's department. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/department")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> changeDepartment(@PathVariable long id,
+    public ResponseEntity<HttpStatus> changeDepartment(@PathVariable("id") long id,
                                                        @RequestBody @Valid UserDepartmentDto userDepartmentDto
     ) {
         userService.changeDepartment(id, userDepartmentDto.getDepartment());
@@ -86,7 +86,7 @@ public class UserController {
     @Operation(summary = "Change employee's job title. Access only for authorized users with ADMIN role")
     @PutMapping("/employees/{id}/job_title")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> changeJobTitle(@PathVariable long id,
+    public ResponseEntity<HttpStatus> changeJobTitle(@PathVariable("id") long id,
                                                      @RequestBody @Valid UserJobTitleDto userJobTitleDto
     ) {
         userService.changeJobTitle(id, userJobTitleDto.getJobTitle());
@@ -96,14 +96,14 @@ public class UserController {
     @Operation(summary = "Remove an employee from the intranet. Access only for authorized users with ADMIN role")
     @DeleteMapping("/employees/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> removeEmployee(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> removeEmployee(@PathVariable("id") long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Operation(summary = "Add a user's picture. Access only for authorized users with ADMIN role")
     @PostMapping("/employees/{id}/userpic")
-    public ResponseEntity<String> uploadUserPic(@PathVariable long id,
+    public ResponseEntity<String> uploadUserPic(@PathVariable("id") long id,
                                                 @RequestParam("file") MultipartFile file) {
         try {
             User user = userService.findUserById(id);
@@ -117,7 +117,7 @@ public class UserController {
     }
 
     @GetMapping("/employees/{id}/avatar")
-    public ResponseEntity<byte[]> getUserImage(@PathVariable long id) {
+    public ResponseEntity<byte[]> getUserImage(@PathVariable("id") long id) {
         try {
             User user = userService.findUserById(id);
             byte[] avatar = userImageService.getUserImage(user.getImageName());
