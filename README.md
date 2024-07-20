@@ -1,6 +1,10 @@
-# basic-intranet-template
-MVP version is ready.
-Following goals: enrich with exceptions' handling, fix small bugs.
+# Basic Intranet Template
 
-It's a basic intranet (maybe it can be even a template) with the most popular CRUD functions for it.
+## Overview
+MVP version is ready. Following goals: 
+- enrich with exceptions' handling
+- fix small bugs.
+
+Server-side part of basic intranet with the most popular CRUD functions for it and with added secuity with JWT using.
+
 
