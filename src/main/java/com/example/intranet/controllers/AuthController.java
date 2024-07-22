@@ -5,6 +5,7 @@ import com.example.intranet.dtos.SignInRequestDto;
 import com.example.intranet.dtos.SignUpRequestDto;
 import com.example.intranet.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -28,7 +29,9 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Not all the necessary fields are present in DTO or has correct values")
     })
     @PostMapping("/sign-up")
-    public JwtAuthenticationResponseDto signUp(@RequestBody @Valid SignUpRequestDto request) {
+    public JwtAuthenticationResponseDto signUp(
+            @Parameter(description = "Create a new user in the intranet", required = true)
+            @RequestBody @Valid SignUpRequestDto request) {
         return authenticationService.signUp(request);
     }
 
@@ -40,7 +43,9 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Not all the necessary fields are present in DTO or has correct values")
     })
     @PostMapping("/sign-in")
-    public JwtAuthenticationResponseDto signIn(@RequestBody @Valid SignInRequestDto request) {
+    public JwtAuthenticationResponseDto signIn(
+            @Parameter(description = "Login as actual employee wit login-password", required = true)
+            @RequestBody @Valid SignInRequestDto request) {
         return authenticationService.signIn(request);
     }
 }

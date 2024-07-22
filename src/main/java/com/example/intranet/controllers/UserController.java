@@ -5,6 +5,7 @@ import com.example.intranet.models.User;
 import com.example.intranet.services.UserImageService;
 import com.example.intranet.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +38,7 @@ public class UserController {
     @PutMapping("/employees/{id}/name")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> changeName(@PathVariable("id") long id,
+                                                 @Parameter(description = "Employee's name", required = true)
                                                  @RequestBody @Valid UserNameDto userNameDto
     ) {
         userService.changeName(id, userNameDto.getUserName());
@@ -47,6 +49,7 @@ public class UserController {
     @PutMapping("/employees/{id}/surname")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> changeSurname(@PathVariable("id") long id,
+                                                    @Parameter(description = "Employee's surname", required = true)
                                                     @RequestBody @Valid UserSurnameDto userSurnameDto
     ) {
         userService.changeSurname(id, userSurnameDto.getUserSurname());
@@ -57,6 +60,7 @@ public class UserController {
     @PutMapping("/employees/{id}/phone")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> changePhone(@PathVariable("id") long id,
+                                                  @Parameter(description = "Employee's phone number", required = true)
                                                   @RequestBody @Valid UserPhoneDto userPhoneDto
     ) {
         userService.changePhone(id, userPhoneDto.getPhone());
@@ -67,6 +71,7 @@ public class UserController {
     @PutMapping("/employees/{id}/email")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> changeEmail(@PathVariable("id") long id,
+                                                  @Parameter(description = "Employee's email", required = true)
                                                   @RequestBody @Valid UserEmailDto userEmailDto
     ) {
         userService.changeEmail(id, userEmailDto.getEmail());
@@ -77,6 +82,7 @@ public class UserController {
     @PutMapping("/employees/{id}/department")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> changeDepartment(@PathVariable("id") long id,
+                                                       @Parameter(description = "Employee's department", required = true)
                                                        @RequestBody @Valid UserDepartmentDto userDepartmentDto
     ) {
         userService.changeDepartment(id, userDepartmentDto.getDepartment());
@@ -87,6 +93,7 @@ public class UserController {
     @PutMapping("/employees/{id}/job_title")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> changeJobTitle(@PathVariable("id") long id,
+                                                     @Parameter(description = "Employee's job title", required = true)
                                                      @RequestBody @Valid UserJobTitleDto userJobTitleDto
     ) {
         userService.changeJobTitle(id, userJobTitleDto.getJobTitle());
@@ -117,6 +124,7 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Get an employee's image")
     @GetMapping("/employees/{id}/avatar")
     public ResponseEntity<byte[]> getUserImage(@PathVariable("id") long id) {
         try {
@@ -130,8 +138,8 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Get ADMIN role (for demo)")
     @GetMapping("/get-admin")
-    @Operation(summary = "Получить роль ADMIN (для демонстрации)")
     public void getAdmin() {
         userService.getAdmin();
     }
