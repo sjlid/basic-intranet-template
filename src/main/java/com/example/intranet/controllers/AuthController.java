@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,8 +34,8 @@ public class AuthController {
     @PostMapping("/sign-up")
     public JwtAuthenticationResponseDto signUp(
             @Parameter(description = "Create a new user in the intranet", required = true)
-            @RequestBody @Valid SignUpRequestDto request) {
-        return authenticationService.signUp(request);
+            @RequestBody @Valid SignUpRequestDto request, MultipartFile file) {
+        return authenticationService.signUp(request, file);
     }
 
     @Operation(summary = "Login for user", description = "Here you can logging in as a user",

@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationResponseDto signUp(SignUpRequestDto request) {
+    public JwtAuthenticationResponseDto signUp(SignUpRequestDto request, MultipartFile file) {
         var user = User.builder()
                 .login(request.getLogin())
                 .email(request.getEmail())
