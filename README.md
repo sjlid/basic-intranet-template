@@ -3,7 +3,6 @@
 ## Overview
 MVP version is ready. Following goals: 
 - add sorting and filters
-- add the rest of swagger annotations
 - enrich with exceptions' handling
 - fix small bugs
 
