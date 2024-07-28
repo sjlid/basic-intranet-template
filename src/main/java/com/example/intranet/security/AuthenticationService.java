@@ -21,7 +21,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationResponseDto signUp(SignUpRequestDto request, MultipartFile file) {
+    public JwtAuthenticationResponseDto signUp(SignUpRequestDto request) {
         var user = User.builder()
                 .login(request.getLogin())
                 .email(request.getEmail())

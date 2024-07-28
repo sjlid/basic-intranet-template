@@ -34,8 +34,8 @@ public class AuthController {
     @PostMapping("/sign-up")
     public JwtAuthenticationResponseDto signUp(
             @Parameter(description = "Create a new user in the intranet", required = true)
-            @RequestBody @Valid SignUpRequestDto request, MultipartFile file) {
-        return authenticationService.signUp(request, file);
+            @RequestBody @Valid SignUpRequestDto request) {
+        return authenticationService.signUp(request);
     }
 
     @Operation(summary = "Login for user", description = "Here you can logging in as a user",
